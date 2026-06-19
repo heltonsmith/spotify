@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify Clone - Panel Principal</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <nav class="spotify-sidebar">
+      <a href="index.html" class="brand-logo">
+        <i class="bi bi-spotify" style="font-size: 2.2rem;"></i>
+        <h4>Spotify Clone</h4>
+      </a>
+      <ul class="sidebar-menu">
+        <li class="sidebar-menu-item">
+          <a href="index.html" class="sidebar-link active" id="nav-home">
+            <i class="bi bi-house-door-fill"></i>
+            <span>Inicio</span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a href="canciones.html" class="sidebar-link" id="nav-canciones">
+            <i class="bi bi-music-note-beamed"></i>
+            <span>Canciones</span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a href="artistas.html" class="sidebar-link" id="nav-artistas">
+            <i class="bi bi-people-fill"></i>
+            <span>Artistas</span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a href="playlists.html" class="sidebar-link" id="nav-playlists">
+            <i class="bi bi-music-note-list"></i>
+            <span>Playlists</span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a href="usuarios.html" class="sidebar-link" id="nav-usuarios">
+            <i class="bi bi-person-lines-fill"></i>
+            <span>Usuarios</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-divider"></div>
+      <div class="mt-auto p-2 text-center" style="font-size: 0.75rem; color: var(--spotify-text-muted);">
+        <p class="mb-0">MongoDB Atlas</p>
+        <p class="fw-bold text-success">spotify_clone</p>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <header class="top-header">
+        <div>
+          <span class="text-uppercase text-muted fw-bold" style="font-size: 0.8rem; letter-spacing: 1px;">Streaming de Música</span>
+          <h1 class="fw-extrabold mb-0 text-white mt-1">Buenas Tardes</h1>
+        </div>
+        <div class="db-badge">
+          <span class="dot"></span>
+          <span id="db-status-text">Conectando a MongoDB...</span>
+        </div>
+      </header>
+
+      <!-- Welcome Banner -->
+      <div class="p-4 rounded-4 mb-4" style="background: linear-gradient(135deg, rgba(29,185,84,0.2) 0%, rgba(18,18,18,0.8) 100%); border: 1px solid rgba(29,185,84,0.3);">
+        <div class="row align-items-center">
+          <div class="col-md-8">
+            <h3 class="fw-bold text-white mb-2">Motor de datos MongoDB Atlas</h3>
+            <p class="text-light mb-3" style="max-width: 600px;">
+              Este sistema implementa una interfaz interactiva de Spotify conectada directamente a tu cluster de MongoDB Atlas. Explora colecciones, busca canciones en tiempo real con <strong>Regex</strong>, filtra por reproducciones con <strong>operadores relacionales ($gt)</strong>, y edita suscripciones usando <strong>dot notation</strong>.
+            </p>
+            <a href="canciones.html" class="btn btn-spotify btn-lg"><i class="bi bi-play-circle-fill me-2"></i> Escuchar Ahora</a>
+          </div>
+          <div class="col-md-4 d-none d-md-block text-center text-success" style="font-size: 6rem;">
+            <i class="bi bi-music-player"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="row g-4 mb-5">
+        <div class="col-6 col-lg-3">
+          <div class="stat-box">
+            <div class="stat-num" id="stat-usuarios">-</div>
+            <div class="stat-label">Usuarios</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-box" style="border-left-color: #3d8bf2;">
+            <div class="stat-num" id="stat-artistas">-</div>
+            <div class="stat-label">Artistas</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-box" style="border-left-color: #ffc107;">
+            <div class="stat-num" id="stat-canciones">-</div>
+            <div class="stat-label">Canciones</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-box" style="border-left-color: #e35d6a;">
+            <div class="stat-num" id="stat-playlists">-</div>
+            <div class="stat-label">Playlists</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview Lists -->
+      <div class="row g-4 mb-5">
+        <!-- Recommended Songs -->
+        <div class="col-md-7">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold mb-0">Canciones destacadas</h4>
+            <a href="canciones.html" class="text-decoration-none text-success fw-bold btn-link" style="font-size: 0.85rem;">Ver todas</a>
+          </div>
+          
+          <div class="spotify-card p-0">
+            <div class="table-responsive">
+              <table class="table spotify-table mb-0">
+                <thead>
+                  <tr>
+                    <th style="width: 50px;">#</th>
+                    <th>Título</th>
+                    <th>Artista</th>
+                    <th class="d-none d-md-table-cell">Reproducciones</th>
+                    <th style="width: 80px;"></th>
+                  </tr>
+                </thead>
+                <tbody id="destacadas-table-body">
+                  <tr>
+                    <td colspan="5" class="text-center py-4">Cargando canciones recomendadas...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- DB Metrics -->
+        <div class="col-md-5">
+          <h4 class="fw-bold mb-4">Estado del Servidor</h4>
+          <div class="spotify-card">
+            <div class="d-flex align-items-center justify-content-between border-bottom border-secondary pb-3 mb-3">
+              <div>
+                <span class="text-muted d-block" style="font-size: 0.75rem;">TOTAL DE STREAMINGS</span>
+                <span class="fw-bold fs-3 text-white" id="stat-reproducciones">0</span>
+              </div>
+              <div class="text-success fs-1">
+                <i class="bi bi-graph-up-arrow"></i>
+              </div>
+            </div>
+            
+            <div class="list-group list-group-flush bg-transparent">
+              <div class="list-group-item bg-transparent text-white border-secondary px-0 d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-hdd-network-fill text-success me-2"></i> Base de datos</span>
+                <span class="text-muted">spotify_clone</span>
+              </div>
+              <div class="list-group-item bg-transparent text-white border-secondary px-0 d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-check-circle-fill text-success me-2"></i> Estado de conexión</span>
+                <span class="text-success fw-semibold">Activa</span>
+              </div>
+              <div class="list-group-item bg-transparent text-white border-secondary px-0 d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-shield-check text-success me-2"></i> Operaciones CRUD</span>
+                <span class="text-muted">Soportadas</span>
+              </div>
+              <div class="list-group-item bg-transparent text-white border-0 px-0 d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-server text-success me-2"></i> Puerto Backend</span>
+                <span class="text-muted">3000 (Express)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </main>
+  </div>
+
+  <!-- Now Playing Footer Bar -->
+  <footer class="player-bar">
+    <div class="player-track-info">
+      <div class="player-album-art" id="player-art">
+        <i class="bi bi-music-note"></i>
+      </div>
+      <div>
+        <div class="player-song-title" id="player-title">Selecciona una canción</div>
+        <div class="player-artist-name" id="player-artist">Disfruta tu música</div>
+      </div>
+      <div class="visualizer ms-3" id="player-visualizer">
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+      </div>
+    </div>
+
+    <div class="player-controls">
+      <div class="control-buttons">
+        <button class="control-btn"><i class="bi bi-shuffle"></i></button>
+        <button class="control-btn"><i class="bi bi-skip-start-fill"></i></button>
+        <button class="control-btn control-btn-play" id="player-play-btn"><i class="bi bi-play-fill"></i></button>
+        <button class="control-btn"><i class="bi bi-skip-end-fill"></i></button>
+        <button class="control-btn"><i class="bi bi-repeat"></i></button>
+      </div>
+      <div class="playback-progress">
+        <span id="player-current-time">0:00</span>
+        <div class="progress-bar-container" id="player-progress-bar">
+          <div class="progress-bar-fill" id="player-progress-fill">
+            <div class="progress-handle"></div>
+          </div>
+        </div>
+        <span id="player-total-time">0:00</span>
+      </div>
+    </div>
+
+    <div class="player-extra">
+      <button class="control-btn" id="player-volume-btn"><i class="bi bi-volume-up-fill"></i></button>
+      <div class="volume-bar" id="player-volume-bar">
+        <div class="volume-fill" id="player-volume-fill"></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- API client & Player controllers -->
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/player.js"></script>
+  <!-- Dashboard JS -->
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

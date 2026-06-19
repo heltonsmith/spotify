@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify Clone - Artistas</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <nav class="spotify-sidebar">
+      <a href="index.html" class="brand-logo">
+        <i class="bi bi-spotify" style="font-size: 2.2rem;"></i>
+        <h4>Spotify Clone</h4>
+      </a>
+      <ul class="sidebar-menu">
+        <li class="sidebar-menu-item">
+          <a href="index.html" class="sidebar-link" id="nav-home">
+            <i class="bi bi-house-door-fill"></i>
+            <span>Inicio</span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a href="canciones.html" class="sidebar-link" id="nav-canciones">
+            <i class="bi bi-music-note-beamed"></i>
+            <span>Canciones</span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a href="artistas.html" class="sidebar-link active" id="nav-artistas">
+            <i class="bi bi-people-fill"></i>
+            <span>Artistas</span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a href="playlists.html" class="sidebar-link" id="nav-playlists">
+            <i class="bi bi-music-note-list"></i>
+            <span>Playlists</span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a href="usuarios.html" class="sidebar-link" id="nav-usuarios">
+            <i class="bi bi-person-lines-fill"></i>
+            <span>Usuarios</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-divider"></div>
+      <div class="mt-auto p-2 text-center" style="font-size: 0.75rem; color: var(--spotify-text-muted);">
+        <p class="mb-0">MongoDB Atlas</p>
+        <p class="fw-bold text-success">spotify_clone</p>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <header class="top-header">
+        <div>
+          <span class="text-uppercase text-muted fw-bold" style="font-size: 0.8rem; letter-spacing: 1px;">Gestión de Artistas</span>
+          <h1 class="fw-extrabold mb-0 text-white mt-1">Artistas</h1>
+        </div>
+        <div class="db-badge">
+          <span class="dot"></span>
+          <span>MongoDB Atlas</span>
+        </div>
+      </header>
+
+      <!-- Action Panel -->
+      <div class="spotify-card mb-4">
+        <div class="row align-items-center justify-content-between g-3">
+          <div class="col-md-8">
+            <p class="text-muted mb-0">
+              Gestión de perfiles de artistas. Los géneros se definen como <strong>arreglos de strings</strong> en MongoDB, permitiendo clasificar un artista en múltiples categorías.
+            </p>
+          </div>
+          <div class="col-md-4 text-md-end text-center">
+            <button class="btn btn-spotify w-100" data-bs-toggle="modal" data-bs-target="#addArtistModal">
+              <i class="bi bi-person-plus-fill me-2"></i> Añadir Artista
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Artists Grid View -->
+      <div class="row g-4" id="artists-grid">
+        <!-- Artists loaded dynamically -->
+        <div class="col-12 text-center py-5 text-muted">
+          Cargando perfiles de artistas desde MongoDB Atlas...
+        </div>
+      </div>
+      
+    </main>
+  </div>
+
+  <!-- Add Artist Modal -->
+  <div class="modal fade" id="addArtistModal" tabindex="-1" aria-labelledby="addArtistModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="addArtistModalLabel"><i class="bi bi-person-plus text-success me-2"></i>Agregar Nuevo Artista</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="add-artist-form">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="artist-id" class="form-label">ID del Artista (ej: art_103)</label>
+              <input type="text" class="form-control" id="artist-id" placeholder="art_..." required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="artist-name" class="form-label">Nombre del Artista</label>
+              <input type="text" class="form-control" id="artist-name" required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="artist-genres" class="form-label">Géneros Musicales (Separados por coma)</label>
+              <input type="text" class="form-control" id="artist-genres" placeholder="Rock, Pop, Indie, Alternativo" required>
+              <div class="form-text text-muted" style="font-size: 0.75rem;">Se guardarán automáticamente como un arreglo en MongoDB.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="artist-listeners" class="form-label">Oyentes Mensuales</label>
+              <input type="number" class="form-control" id="artist-listeners" value="0" min="0" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-spotify-outline" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-spotify">Guardar Artista</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Now Playing Footer Bar -->
+  <footer class="player-bar">
+    <div class="player-track-info">
+      <div class="player-album-art" id="player-art">
+        <i class="bi bi-music-note"></i>
+      </div>
+      <div>
+        <div class="player-song-title" id="player-title">Selecciona una canción</div>
+        <div class="player-artist-name" id="player-artist">Disfruta tu música</div>
+      </div>
+      <div class="visualizer ms-3" id="player-visualizer">
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+      </div>
+    </div>
+
+    <div class="player-controls">
+      <div class="control-buttons">
+        <button class="control-btn"><i class="bi bi-shuffle"></i></button>
+        <button class="control-btn"><i class="bi bi-skip-start-fill"></i></button>
+        <button class="control-btn control-btn-play" id="player-play-btn"><i class="bi bi-play-fill"></i></button>
+        <button class="control-btn"><i class="bi bi-skip-end-fill"></i></button>
+        <button class="control-btn"><i class="bi bi-repeat"></i></button>
+      </div>
+      <div class="playback-progress">
+        <span id="player-current-time">0:00</span>
+        <div class="progress-bar-container" id="player-progress-bar">
+          <div class="progress-bar-fill" id="player-progress-fill">
+            <div class="progress-handle"></div>
+          </div>
+        </div>
+        <span id="player-total-time">0:00</span>
+      </div>
+    </div>
+
+    <div class="player-extra">
+      <button class="control-btn" id="player-volume-btn"><i class="bi bi-volume-up-fill"></i></button>
+      <div class="volume-bar" id="player-volume-bar">
+        <div class="volume-fill" id="player-volume-fill"></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- API client & Player controllers -->
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/player.js"></script>
+  <!-- Artistas JS -->
+  <script src="assets/js/artistas.js"></script>
+</body>
+</html>
